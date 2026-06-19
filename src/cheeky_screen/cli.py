@@ -21,6 +21,12 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path("screenshots"),
         help="Directory where screenshots are saved.",
     )
+    parser.add_argument(
+        "--model-path",
+        type=Path,
+        default=None,
+        help="Path to a MediaPipe hand_landmarker.task model file.",
+    )
     parser.add_argument("--no-preview", action="store_true", help="Run without the preview window.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable debug logging.")
     return parser
@@ -39,6 +45,7 @@ def main(argv: list[str] | None = None) -> int:
         AppConfig(
             camera_index=args.camera_index,
             cooldown_seconds=args.cooldown,
+            model_path=args.model_path,
             preview=not args.no_preview,
             screenshot_dir=args.screenshot_dir,
         )

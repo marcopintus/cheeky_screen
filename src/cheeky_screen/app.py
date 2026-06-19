@@ -9,6 +9,7 @@ from cheeky_screen.config import AppConfig
 from cheeky_screen.cooldown import Cooldown
 from cheeky_screen.gestures import MiddleFingerGesture
 from cheeky_screen.hand_tracking import HandTracker
+from cheeky_screen.model_assets import ModelAssetResolver
 from cheeky_screen.screenshot import ScreenshotService
 
 LOGGER = logging.getLogger(__name__)
@@ -18,11 +19,13 @@ WINDOW_NAME = "Cheeky Screen"
 def run(config: AppConfig) -> None:
     gesture = MiddleFingerGesture()
     cooldown = Cooldown(config.cooldown_seconds)
+    model_path = config.model_path or ModelAssetResolver().resolve()
     screenshots = ScreenshotService(config.screenshot_dir)
 
     with (
         Camera(config.camera_index) as camera,
         HandTracker(
+            model_path=model_path,
             min_detection_confidence=config.min_detection_confidence,
             min_tracking_confidence=config.min_tracking_confidence,
         ) as tracker,

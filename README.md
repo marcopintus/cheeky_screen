@@ -29,12 +29,17 @@ The preview window opens by default. Press `q` or `Esc` to quit.
 Screenshots are saved to `screenshots/` and the app waits two seconds before allowing another
 screenshot.
 
+On first run, the app downloads the MediaPipe hand landmarker model into
+`.cache/cheeky_screen/hand_landmarker.task`. You can also provide a model explicitly with
+`--model-path`.
+
 Useful options:
 
 ```powershell
 cheeky-screen --camera-index 1
 cheeky-screen --cooldown 3
 cheeky-screen --screenshot-dir C:\Temp\cheeky-shots
+cheeky-screen --model-path C:\models\hand_landmarker.task
 cheeky-screen --no-preview
 ```
 
