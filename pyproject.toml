@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cheeky-screen"
+version = "0.1.0"
+description = "Take a screenshot when a configured webcam hand gesture is detected."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+  { name = "Marco Pintus" }
+]
+dependencies = [
+  "mediapipe>=0.10.14",
+  "opencv-python>=4.10.0.84",
+  "pillow>=10.4.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.10.0",
+  "pytest>=8.2.0",
+  "ruff>=0.5.0",
+]
+
+[project.scripts]
+cheeky-screen = "cheeky_screen.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cheeky_screen"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "C4", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+files = ["src", "tests"]
+
+[[tool.mypy.overrides]]
+module = [
+  "cv2",
+  "mediapipe.*",
+  "PIL.*",
+]
+ignore_missing_imports = true
