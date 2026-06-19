@@ -7,6 +7,7 @@ import cv2
 from cheeky_screen.camera import Camera
 from cheeky_screen.config import AppConfig
 from cheeky_screen.cooldown import Cooldown
+from cheeky_screen.gesture_hold import GestureHold
 from cheeky_screen.gestures import MiddleFingerGesture
 from cheeky_screen.hand_tracking import HandTracker
 from cheeky_screen.model_assets import ModelAssetResolver
@@ -21,6 +22,7 @@ EXIT_KEYS = {ord("q"), 27}
 def run(config: AppConfig) -> None:
     gesture = MiddleFingerGesture()
     cooldown = Cooldown(config.cooldown_seconds)
+    gesture_hold = GestureHold(config.gesture_hold_seconds)
     model_path = config.model_path or ModelAssetResolver().resolve()
     screenshots = ScreenshotService(config.screenshot_dir)
 
@@ -37,9 +39,11 @@ def run(config: AppConfig) -> None:
                 frame = camera.read()
                 tracked = tracker.process(frame)
 
-                if any(gesture.matches(hand) for hand in tracked.hands) and cooldown.ready():
+                gesture_detected = any(gesture.matches(hand) for hand in tracked.hands)
+                if gesture_hold.update(gesture_detected) and cooldown.ready():
                     path = screenshots.capture()
                     cooldown.trigger()
+                    gesture_hold.reset()
                     LOGGER.info("Screenshot saved to %s", path)
                     show_screenshot_notification(path)
 

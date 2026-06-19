@@ -16,6 +16,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--camera-index", type=int, default=0)
     parser.add_argument("--cooldown", type=float, default=2.0, help="Seconds between screenshots.")
     parser.add_argument(
+        "--gesture-hold",
+        type=float,
+        default=0.5,
+        help="Seconds the gesture must be held before taking a screenshot.",
+    )
+    parser.add_argument(
         "--screenshot-dir",
         type=Path,
         default=Path("screenshots"),
@@ -45,6 +51,7 @@ def main(argv: list[str] | None = None) -> int:
         AppConfig(
             camera_index=args.camera_index,
             cooldown_seconds=args.cooldown,
+            gesture_hold_seconds=args.gesture_hold,
             model_path=args.model_path,
             preview=not args.no_preview,
             screenshot_dir=args.screenshot_dir,

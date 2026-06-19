@@ -27,9 +27,9 @@ cheeky-screen
 The preview window opens by default. Press `q` or `Esc`, close the preview window, or use
 `Ctrl+C` in the terminal to quit.
 
-Screenshots are saved to `screenshots/` and the app waits two seconds before allowing another
-screenshot. After each capture, a small "Screenshot taken" window appears; press any key or close
-the window to resume the webcam feed.
+Screenshots are saved to `screenshots/`. The gesture must be held for 0.5 seconds before capture,
+and the app waits two seconds before allowing another screenshot. After each capture, a small
+"Screenshot taken" window appears; press any key or close the window to resume the webcam feed.
 
 On first run, the app downloads the MediaPipe hand landmarker model into
 `.cache/cheeky_screen/hand_landmarker.task`. You can also provide a model explicitly with
@@ -40,6 +40,7 @@ Useful options:
 ```powershell
 cheeky-screen --camera-index 1
 cheeky-screen --cooldown 3
+cheeky-screen --gesture-hold 0.3
 cheeky-screen --screenshot-dir C:\Temp\cheeky-shots
 cheeky-screen --model-path C:\models\hand_landmarker.task
 cheeky-screen --no-preview
