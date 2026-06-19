@@ -24,10 +24,12 @@ python -m pip install -e ".[dev]"
 cheeky-screen
 ```
 
-The preview window opens by default. Press `q` or `Esc` to quit.
+The preview window opens by default. Press `q` or `Esc`, close the preview window, or use
+`Ctrl+C` in the terminal to quit.
 
 Screenshots are saved to `screenshots/` and the app waits two seconds before allowing another
-screenshot.
+screenshot. After each capture, a small "Screenshot taken" window appears; press any key or close
+the window to resume the webcam feed.
 
 On first run, the app downloads the MediaPipe hand landmarker model into
 `.cache/cheeky_screen/hand_landmarker.task`. You can also provide a model explicitly with
