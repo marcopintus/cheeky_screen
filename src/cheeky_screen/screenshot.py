@@ -5,7 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Protocol
 
-from PIL import ImageGrab
+from cheeky_screen.screen_grab import ScreenGrabber, default_grabber
 
 
 class Clock(Protocol):
@@ -21,12 +21,12 @@ class SystemClock:
 class ScreenshotService:
     output_dir: Path
     clock: Clock = field(default_factory=SystemClock)
+    grabber: ScreenGrabber = field(default_factory=default_grabber)
 
     def capture(self) -> Path:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         target = self._next_path()
-        image = ImageGrab.grab()
-        image.save(target)
+        self.grabber.grab_to(target)
         return target
 
     def _next_path(self) -> Path:

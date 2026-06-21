@@ -17,6 +17,8 @@ dependencies = [
   "numpy>=2.0.0",
   "opencv-python>=4.10.0.84",
   "pillow>=10.4.0",
+  # Pure-Python D-Bus client used for the Wayland screenshot portal (Linux only).
+  "jeepney>=0.8.0; sys_platform == 'linux'",
 ]
 
 [project.optional-dependencies]
@@ -53,6 +55,7 @@ files = ["src", "tests"]
 [[tool.mypy.overrides]]
 module = [
   "cv2",
+  "jeepney.*",
   "mediapipe.*",
   "PIL.*",
 ]

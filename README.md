@@ -8,6 +8,11 @@ gesture logic separate from the webcam integration so the core behavior can be t
 
 - Python 3.11 or newer
 - A working webcam
+- **Linux:** capture is session-aware. Wayland sessions (GNOME, KDE, wlroots) use the
+  `xdg-desktop-portal` Screenshot service — make sure `xdg-desktop-portal` and its backend (e.g.
+  `xdg-desktop-portal-gnome`) are installed and running; the `jeepney` dependency talks to it. X11
+  sessions use the first available CLI tool: `maim`, `scrot`, `gnome-screenshot`, `spectacle`, or
+  `import` (ImageMagick). Windows and macOS use Pillow's built-in capture and need nothing extra.
 
 ## Setup
 
